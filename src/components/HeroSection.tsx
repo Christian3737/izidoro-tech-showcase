@@ -79,13 +79,15 @@ const HeroSection = () => {
             transition={{ delay: 0.9, duration: 0.8 }}
             className="flex flex-col sm:flex-row items-center justify-center gap-4"
           >
-            <button
-              onClick={() => scrollTo("#contato")}
+            <a
+              href="https://wa.me/5565993381666"
+              target="_blank"
+              rel="noopener noreferrer"
               className="group px-8 py-3.5 bg-primary text-primary-foreground font-semibold rounded-sm glow-gold hover:bg-gold-light transition-all duration-300 flex items-center gap-2 cursor-none"
             >
               Solicitar Projeto
               <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-            </button>
+            </a>
             <button
               onClick={() => scrollTo("#servicos")}
               className="px-8 py-3.5 border border-gold/30 text-foreground font-semibold rounded-sm hover:border-gold/60 hover:bg-gold/5 transition-all duration-300 cursor-none"

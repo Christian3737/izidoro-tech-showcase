@@ -6,7 +6,7 @@ const navLinks = [
   { label: "Início", href: "#hero" },
   { label: "Sobre", href: "#sobre" },
   { label: "Serviços", href: "#servicos" },
-  { label: "Portfólio", href: "#portfolio" },
+  { label: "Soluções", href: "#portfolio" },
   { label: "Contato", href: "#contato" },
 ];
 
@@ -50,12 +50,14 @@ const Header = () => {
               {link.label}
             </button>
           ))}
-          <button
-            onClick={() => handleClick("#contato")}
+          <a
+            href="https://wa.me/5565993381666"
+            target="_blank"
+            rel="noopener noreferrer"
             className="px-5 py-2 text-sm font-semibold bg-primary text-primary-foreground rounded-sm glow-gold hover:bg-gold-light transition-all duration-300 cursor-none"
           >
             Solicitar Projeto
-          </button>
+          </a>
         </nav>
 
         <button onClick={() => setMobileOpen(!mobileOpen)} className="md:hidden text-foreground cursor-none">

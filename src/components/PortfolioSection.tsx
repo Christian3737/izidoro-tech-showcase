@@ -28,7 +28,7 @@ const PortfolioSection = () => {
         >
           <span className="text-xs text-gold tracking-[0.3em] uppercase font-medium">Nosso trabalho</span>
           <h2 className="text-3xl md:text-5xl font-display font-bold mt-4">
-            <span className="text-gradient-gold">Portfólio</span>
+            <span className="text-gradient-gold">Soluções</span>
           </h2>
         </motion.div>
 
