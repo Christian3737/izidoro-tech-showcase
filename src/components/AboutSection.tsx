@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
-import founderImg from "@/assets/founder.jpg";
+import founderImg from "@/assets/founder.jpeg";
 
 const AboutSection = () => {
   const ref = useRef(null);
