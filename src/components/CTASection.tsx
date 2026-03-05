@@ -24,13 +24,15 @@ const CTASection = () => {
           <p className="text-muted-foreground text-lg mb-10 leading-relaxed">
             Sua empresa merece uma presença digital de alto padrão. Vamos desenvolver seu projeto com tecnologia, design e performance.
           </p>
-          <button
-            onClick={() => document.querySelector("#contato")?.scrollIntoView({ behavior: "smooth" })}
+          <a
+            href="https://wa.me/5565993381666"
+            target="_blank"
+            rel="noopener noreferrer"
             className="group inline-flex items-center gap-2 px-10 py-4 bg-primary text-primary-foreground font-bold text-lg rounded-sm glow-gold-strong hover:bg-gold-light transition-all duration-300 cursor-none"
           >
             Solicitar Orçamento
             <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
-          </button>
+          </a>
         </motion.div>
       </div>
     </section>

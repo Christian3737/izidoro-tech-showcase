@@ -1,10 +1,17 @@
 import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
-import { MessageCircle, Mail, Instagram, Linkedin } from "lucide-react";
+import { useRef, useState } from "react";
+import { MessageCircle, Mail, Instagram, Copy, Check } from "lucide-react";
 
 const ContactSection = () => {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
+  const [copied, setCopied] = useState<string | null>(null);
+
+  const copyText = (text: string, key: string) => {
+    navigator.clipboard.writeText(text);
+    setCopied(key);
+    setTimeout(() => setCopied(null), 2000);
+  };
 
   return (
     <section id="contato" className="py-24 relative" ref={ref}>
@@ -34,7 +41,7 @@ const ContactSection = () => {
 
             <div className="space-y-6">
               <a
-                href="https://wa.me/5500000000000"
+                href="https://wa.me/5565993381666"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-4 p-4 rounded-sm border border-border hover:border-gold/40 hover:bg-gold/5 transition-all duration-300 cursor-none group"
@@ -44,35 +51,34 @@ const ContactSection = () => {
                 </div>
                 <div>
                   <p className="font-display font-semibold text-sm">WhatsApp</p>
-                  <p className="text-muted-foreground text-xs">Envie uma mensagem</p>
+                  <p className="text-muted-foreground text-xs">(65) 99338-1666</p>
                 </div>
               </a>
 
-              <a
-                href="mailto:contato@izidorotech.com"
+              <div
+                onClick={() => copyText("christian.gabriel.izidoro@gmail.com", "email")}
                 className="flex items-center gap-4 p-4 rounded-sm border border-border hover:border-gold/40 hover:bg-gold/5 transition-all duration-300 cursor-none group"
               >
                 <div className="w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center group-hover:bg-gold/20 transition-colors">
                   <Mail size={20} className="text-gold" />
                 </div>
-                <div>
+                <div className="flex-1 min-w-0">
                   <p className="font-display font-semibold text-sm">Email</p>
-                  <p className="text-muted-foreground text-xs">contato@izidorotech.com</p>
+                  <p className="text-muted-foreground text-xs truncate">christian.gabriel.izidoro@gmail.com</p>
                 </div>
-              </a>
+                <div className="text-gold">
+                  {copied === "email" ? <Check size={16} /> : <Copy size={16} />}
+                </div>
+              </div>
 
               <div className="flex justify-center gap-4 pt-4">
                 <a
-                  href="#"
+                  href="https://instagram.com/izidoro.tech"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="w-10 h-10 rounded-full border border-gold/20 flex items-center justify-center hover:border-gold/50 hover:bg-gold/5 transition-all duration-300 cursor-none"
                 >
                   <Instagram size={18} className="text-gold" />
-                </a>
-                <a
-                  href="#"
-                  className="w-10 h-10 rounded-full border border-gold/20 flex items-center justify-center hover:border-gold/50 hover:bg-gold/5 transition-all duration-300 cursor-none"
-                >
-                  <Linkedin size={18} className="text-gold" />
                 </a>
               </div>
             </div>
