@@ -15,36 +15,37 @@ const DifferentialsSection = () => {
   const inView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section className="py-24 relative" ref={ref}>
+    <section className="py-28 bg-card relative" ref={ref}>
       <div className="container mx-auto px-6">
-        <div className="line-gold w-full mb-20" />
-
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          transition={{ duration: 0.7 }}
+          className="mb-20"
         >
-          <span className="text-xs text-gold tracking-[0.3em] uppercase font-medium">Por que nos escolher</span>
-          <h2 className="text-3xl md:text-5xl font-display font-bold mt-4">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-8 h-px bg-primary" />
+            <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-primary">差別化 — Diferenciais</span>
+          </div>
+          <h2 className="text-3xl md:text-5xl font-display font-bold tracking-tight">
             Nossos <span className="text-gradient-gold">Diferenciais</span>
           </h2>
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-10">
           {diffs.map((d, i) => (
             <motion.div
               key={d.title}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.1 + i * 0.1 }}
-              className="text-center p-6 group cursor-none"
+              transition={{ duration: 0.5, delay: 0.1 + i * 0.08 }}
+              className="group"
             >
-              <div className="w-14 h-14 mx-auto rounded-full border border-gold/20 flex items-center justify-center mb-4 group-hover:border-gold/50 group-hover:bg-gold/5 transition-all duration-300">
-                <d.icon size={22} className="text-gold" />
+              <div className="w-10 h-10 border border-border flex items-center justify-center mb-5 group-hover:border-primary transition-colors duration-500">
+                <d.icon size={16} className="text-muted-foreground group-hover:text-primary transition-colors duration-500" />
               </div>
-              <h3 className="font-display font-semibold text-sm mb-2 group-hover:text-gold transition-colors">{d.title}</h3>
-              <p className="text-muted-foreground text-xs leading-relaxed">{d.desc}</p>
+              <h3 className="font-display font-semibold text-sm mb-2 tracking-wide">{d.title}</h3>
+              <p className="text-muted-foreground text-xs leading-relaxed font-light">{d.desc}</p>
             </motion.div>
           ))}
         </div>

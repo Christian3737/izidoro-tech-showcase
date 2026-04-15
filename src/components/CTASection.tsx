@@ -7,31 +7,42 @@ const CTASection = () => {
   const inView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section className="py-24 relative" ref={ref}>
-      <div className="container mx-auto px-6">
-        <div className="line-gold w-full mb-20" />
+    <section className="py-28 bg-foreground relative overflow-hidden" ref={ref}>
+      {/* Subtle grid */}
+      <div
+        className="absolute inset-0 opacity-[0.03]"
+        style={{
+          backgroundImage: `linear-gradient(hsla(0,0%,100%,0.3) 1px, transparent 1px), linear-gradient(90deg, hsla(0,0%,100%,0.3) 1px, transparent 1px)`,
+          backgroundSize: "80px 80px",
+        }}
+      />
 
+      <div className="container mx-auto px-6 relative z-10">
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
-          className="max-w-3xl mx-auto text-center"
+          className="max-w-3xl"
         >
-          <h2 className="text-3xl md:text-5xl font-display font-bold mb-6">
-            Transforme sua ideia em um{" "}
-            <span className="text-gradient-gold">produto digital profissional</span>
+          <div className="flex items-center gap-3 mb-8">
+            <div className="w-8 h-px bg-primary" />
+            <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-primary">始めましょう</span>
+          </div>
+
+          <h2 className="text-3xl md:text-5xl font-display font-bold mb-6 text-background tracking-tight leading-tight">
+            Transforme sua ideia em um produto digital profissional
           </h2>
-          <p className="text-muted-foreground text-lg mb-10 leading-relaxed">
+          <p className="text-background/50 text-base mb-10 leading-relaxed font-light max-w-lg">
             Sua empresa merece uma presença digital de alto padrão. Vamos desenvolver seu projeto com tecnologia, design e performance.
           </p>
           <a
             href="https://wa.me/5565993381666"
             target="_blank"
             rel="noopener noreferrer"
-            className="group inline-flex items-center gap-2 px-10 py-4 bg-primary text-primary-foreground font-bold text-lg rounded-sm glow-gold-strong hover:bg-gold-light transition-all duration-300 cursor-none"
+            className="group inline-flex items-center gap-3 px-8 py-3.5 bg-primary text-primary-foreground font-medium text-sm tracking-wide hover:bg-gold-light transition-colors duration-300"
           >
             Solicitar Orçamento
-            <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+            <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
           </a>
         </motion.div>
       </div>

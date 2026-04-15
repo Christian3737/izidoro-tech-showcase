@@ -31,13 +31,15 @@ const Header = () => {
       animate={{ y: 0 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled ? "bg-background/90 backdrop-blur-xl border-b border-border" : "bg-transparent"
+        scrolled ? "bg-background/80 backdrop-blur-lg border-b border-border" : "bg-transparent"
       }`}
     >
-      <div className="container mx-auto px-6 py-4 flex items-center justify-between">
-        <button onClick={() => handleClick("#hero")} className="font-display font-bold text-xl tracking-wider cursor-none">
-          <span className="text-gradient-gold">IZIDORO</span>
-          <span className="text-foreground"> TECH</span>
+      <div className="container mx-auto px-6 py-5 flex items-center justify-between">
+        <button onClick={() => handleClick("#hero")} className="flex items-center gap-2">
+          <div className="w-2 h-2 bg-primary" />
+          <span className="font-display font-bold text-sm tracking-[0.15em] uppercase text-foreground">
+            IZIDORO TECH
+          </span>
         </button>
 
         <nav className="hidden md:flex items-center gap-8">
@@ -45,7 +47,7 @@ const Header = () => {
             <button
               key={link.href}
               onClick={() => handleClick(link.href)}
-              className="text-sm text-muted-foreground hover:text-primary transition-colors duration-300 font-medium cursor-none"
+              className="text-xs tracking-[0.1em] uppercase text-muted-foreground hover:text-foreground transition-colors duration-300 font-medium"
             >
               {link.label}
             </button>
@@ -54,14 +56,14 @@ const Header = () => {
             href="https://wa.me/5565993381666"
             target="_blank"
             rel="noopener noreferrer"
-            className="px-5 py-2 text-sm font-semibold bg-primary text-primary-foreground rounded-sm glow-gold hover:bg-gold-light transition-all duration-300 cursor-none"
+            className="px-5 py-2 text-xs font-medium tracking-wide bg-foreground text-background hover:bg-primary transition-colors duration-300"
           >
             Solicitar Projeto
           </a>
         </nav>
 
-        <button onClick={() => setMobileOpen(!mobileOpen)} className="md:hidden text-foreground cursor-none">
-          {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+        <button onClick={() => setMobileOpen(!mobileOpen)} className="md:hidden text-foreground">
+          {mobileOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
       </div>
 
@@ -71,14 +73,14 @@ const Header = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-background/95 backdrop-blur-xl border-b border-border"
+            className="md:hidden bg-background/95 backdrop-blur-lg border-b border-border"
           >
             <div className="container mx-auto px-6 py-6 flex flex-col gap-4">
               {navLinks.map((link) => (
                 <button
                   key={link.href}
                   onClick={() => handleClick(link.href)}
-                  className="text-left text-foreground hover:text-primary transition-colors py-2 cursor-none"
+                  className="text-left text-sm text-foreground hover:text-primary transition-colors py-2"
                 >
                   {link.label}
                 </button>
