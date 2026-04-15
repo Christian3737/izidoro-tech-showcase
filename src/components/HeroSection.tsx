@@ -7,7 +7,18 @@ const HeroSection = () => {
 
   return (
     <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      <GridBackground />
+      {/* Video Background */}
+      <div className="absolute inset-0 z-0">
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="w-full h-full object-cover"
+          src={heroVideo.url}
+        />
+        <div className="absolute inset-0 bg-background/70" />
+      </div>
 
       <div className="container mx-auto px-6 relative z-10 pt-20">
         <motion.div
