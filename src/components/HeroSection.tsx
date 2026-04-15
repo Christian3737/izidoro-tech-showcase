@@ -1,33 +1,6 @@
 import { motion } from "framer-motion";
 import { ArrowRight, ChevronDown } from "lucide-react";
-
-const GridBackground = () => (
-  <div className="absolute inset-0 overflow-hidden">
-    {/* Grid */}
-    <div
-      className="absolute inset-0 opacity-[0.06]"
-      style={{
-        backgroundImage: `linear-gradient(hsl(43 56% 52% / 0.3) 1px, transparent 1px), linear-gradient(90deg, hsl(43 56% 52% / 0.3) 1px, transparent 1px)`,
-        backgroundSize: "60px 60px",
-      }}
-    />
-    {/* Radial glow */}
-    <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[800px] rounded-full bg-gold/[0.03] blur-[120px]" />
-    {/* Corner accents */}
-    <div className="absolute top-0 right-0 w-96 h-96 bg-gold/[0.02] blur-[100px] rounded-full" />
-    <div className="absolute bottom-0 left-0 w-64 h-64 bg-gold/[0.02] blur-[80px] rounded-full" />
-    {/* Floating particles */}
-    {[...Array(5)].map((_, i) => (
-      <motion.div
-        key={i}
-        className="absolute w-1 h-1 bg-gold/30 rounded-full"
-        style={{ top: `${20 + i * 15}%`, left: `${10 + i * 20}%` }}
-        animate={{ y: [0, -20, 0], opacity: [0.2, 0.6, 0.2] }}
-        transition={{ duration: 3 + i, repeat: Infinity, ease: "easeInOut" }}
-      />
-    ))}
-  </div>
-);
+import heroVideo from "@/assets/hero-video.mp4.asset.json";
 
 const HeroSection = () => {
   const scrollTo = (id: string) => document.querySelector(id)?.scrollIntoView({ behavior: "smooth" });
