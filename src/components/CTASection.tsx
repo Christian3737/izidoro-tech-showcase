@@ -36,7 +36,7 @@ const CTASection = () => {
             Sua empresa merece uma presença digital de alto padrão. Vamos desenvolver seu projeto com tecnologia, design e performance.
           </p>
           <a
-            href="https://wa.me/5565993381666"
+            href="https://wa.me/5565993381666?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20queria%20um%20or%C3%A7amento!"
             target="_blank"
             rel="noopener noreferrer"
             className="group inline-flex items-center gap-3 px-8 py-3.5 bg-primary text-primary-foreground font-medium text-sm tracking-wide hover:bg-gold-light transition-colors duration-300"

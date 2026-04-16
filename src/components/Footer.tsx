@@ -4,8 +4,12 @@ const Footer = () => (
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         <div>
           <div className="flex items-center gap-2 mb-2">
-            <div className="w-2 h-2 bg-primary" />
-            <span className="font-display font-bold text-sm tracking-[0.15em] uppercase">IZIDORO TECH</span>
+            <div className="flex items-center gap-1">
+              <div className="w-1.5 h-1.5 bg-primary" />
+              <div className="w-1.5 h-1.5 bg-primary/60" />
+              <div className="w-1.5 h-1.5 bg-primary/30" />
+            </div>
+            <span className="font-display font-bold text-sm tracking-[0.2em] uppercase">IZIDORO<span className="text-primary">.</span>TECH</span>
           </div>
           <p className="text-muted-foreground text-xs font-light">
             Desenvolvimento de sites, aplicativos e softwares.
