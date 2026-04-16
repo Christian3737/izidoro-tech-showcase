@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { ArrowRight, ChevronDown } from "lucide-react";
-import heroVideo from "@/assets/hero-video-light.mp4.asset.json";
 
 const HeroSection = () => {
   const scrollTo = (id: string) => document.querySelector(id)?.scrollIntoView({ behavior: "smooth" });
@@ -15,7 +14,7 @@ const HeroSection = () => {
           loop
           playsInline
           className="w-full h-full object-cover"
-          src={heroVideo.url}
+          src="/hero-video-light.mp4"
         />
         <div className="absolute inset-0 bg-background/60" />
       </div>
