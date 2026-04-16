@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { ArrowRight, ChevronDown } from "lucide-react";
-import heroVideo from "@/assets/hero-video-light.mp4.asset.json";
 
 const HeroSection = () => {
   const scrollTo = (id: string) => document.querySelector(id)?.scrollIntoView({ behavior: "smooth" });
