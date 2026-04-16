@@ -14,7 +14,7 @@ const HeroSection = () => {
           loop
           playsInline
           className="w-full h-full object-cover"
-          src={heroVideo.url}
+          src="/hero-video-light.mp4"
         />
         <div className="absolute inset-0 bg-background/60" />
       </div>
