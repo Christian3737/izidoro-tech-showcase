@@ -1,12 +1,16 @@
 import { motion } from "framer-motion";
-import { ArrowRight, ChevronDown } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 
 const HeroSection = () => {
-  const scrollTo = (id: string) => document.querySelector(id)?.scrollIntoView({ behavior: "smooth" });
+  const scrollTo = (id: string) =>
+    document.querySelector(id)?.scrollIntoView({ behavior: "smooth" });
 
   return (
-    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Video Background */}
+    <section
+      id="hero"
+      className="relative min-h-screen flex flex-col justify-end overflow-hidden grain"
+    >
+      {/* Cinematic fullscreen video */}
       <div className="absolute inset-0 z-0">
         <video
           autoPlay
@@ -16,89 +20,95 @@ const HeroSection = () => {
           className="w-full h-full object-cover"
           src="/hero-video-light.mp4"
         />
-        <div className="absolute inset-0 bg-background/60" />
+        {/* Editorial dark overlay — heavy bottom gradient */}
+        <div className="absolute inset-0 bg-ink/55" />
+        <div className="absolute inset-0 bg-gradient-to-b from-ink/30 via-ink/40 to-ink/85" />
       </div>
 
-      <div className="container mx-auto px-6 relative z-10 pt-20">
-        <div className="max-w-5xl mx-auto">
-          {/* Top label */}
+      {/* Top meta line */}
+      <div className="absolute top-28 left-0 right-0 z-10">
+        <div className="container mx-auto px-6 flex items-center justify-between text-background/70">
+          <span className="font-mono text-[10px] tracking-[0.35em] uppercase">
+            Estúdio Digital — Est. 2024
+          </span>
+          <span className="font-mono text-[10px] tracking-[0.35em] uppercase hidden md:inline">
+            Cuiabá / Brasil — Worldwide
+          </span>
+        </div>
+      </div>
+
+      {/* Editorial composition */}
+      <div className="container mx-auto px-6 relative z-10 pb-24 md:pb-32">
+        <div className="grid grid-cols-12 gap-6 items-end">
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.3, duration: 0.6 }}
-            className="mb-10"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.2, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            className="col-span-12 md:col-span-9"
           >
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-px bg-primary" />
-              <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-primary">
-                デジタルソリューション — Soluções Digitais
+            <div className="flex items-center gap-4 mb-10">
+              <div className="w-12 h-px bg-background/60" />
+              <span className="font-mono text-[10px] tracking-[0.35em] uppercase text-background/70">
+                001 — Manifesto
               </span>
             </div>
+
+            <h1 className="font-serif-display text-background font-light leading-[0.95] tracking-[-0.02em] text-[clamp(2.8rem,8.5vw,8.5rem)]">
+              Experiências
+              <br />
+              digitais para{" "}
+              <span className="italic-serif text-terracotta/95">marcas</span>
+              <br />
+              de alto padrão.
+            </h1>
           </motion.div>
-
-          <motion.h1
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.8 }}
-            className="text-4xl md:text-6xl lg:text-[5.5rem] font-display font-bold leading-[1.05] mb-8 tracking-tight"
-          >
-            Tecnologia que
-            <br />
-            transforma{" "}
-            <span className="text-gradient-gold">ideias</span>
-            <br />
-            em produtos digitais
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7, duration: 0.8 }}
-            className="text-base md:text-lg text-muted-foreground max-w-lg mb-12 leading-relaxed font-light"
-          >
-            Desenvolvimento profissional de sites, aplicativos e softwares personalizados para empresas e negócios modernos.
-          </motion.p>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.9, duration: 0.8 }}
-            className="flex flex-col sm:flex-row items-start gap-4"
+            transition={{ duration: 1, delay: 0.9, ease: [0.16, 1, 0.3, 1] }}
+            className="col-span-12 md:col-span-3 md:pb-3"
           >
+            <p className="text-background/75 text-sm leading-relaxed font-light max-w-xs">
+              Desenhamos a presença digital de marcas que entendem o valor de cada detalhe — do conceito ao último pixel.
+            </p>
+          </motion.div>
+        </div>
+
+        {/* Bottom bar */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 1.3 }}
+          className="mt-20 pt-8 border-t border-background/15 flex flex-col md:flex-row items-start md:items-center justify-between gap-6"
+        >
+          <div className="flex items-center gap-8">
             <a
               href="https://wa.me/5565993381666?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20queria%20um%20or%C3%A7amento!"
               target="_blank"
               rel="noopener noreferrer"
-              className="group px-8 py-3.5 bg-foreground text-background font-medium text-sm tracking-wide hover:bg-primary transition-colors duration-300 flex items-center gap-3"
+              className="group inline-flex items-center gap-3 text-background border-b border-background/40 hover:border-terracotta-soft pb-1 transition-colors"
             >
-              Solicitar Projeto
-              <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+              <span className="text-sm tracking-wide">Iniciar um projeto</span>
+              <ArrowUpRight
+                size={16}
+                className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"
+              />
             </a>
             <button
-              onClick={() => scrollTo("#servicos")}
-              className="px-8 py-3.5 border border-foreground/20 text-foreground font-medium text-sm tracking-wide hover:border-primary hover:text-primary transition-all duration-300"
+              onClick={() => scrollTo("#trabalhos")}
+              className="text-sm text-background/60 hover:text-background transition-colors tracking-wide"
             >
-              Ver Serviços
+              Ver trabalhos →
             </button>
-          </motion.div>
-        </div>
+          </div>
 
-        {/* Scroll indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5 }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 cursor-pointer"
-          onClick={() => scrollTo("#sobre")}
-        >
-          <motion.div
-            animate={{ y: [0, 6, 0] }}
-            transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-            className="flex flex-col items-center gap-2"
-          >
-            <span className="font-mono text-[9px] tracking-[0.3em] uppercase text-muted-foreground">スクロール</span>
-            <ChevronDown size={14} className="text-primary" />
-          </motion.div>
+          <div className="flex items-center gap-3 text-background/50">
+            <div className="w-1.5 h-1.5 rounded-full bg-terracotta-soft animate-pulse" />
+            <span className="font-mono text-[10px] tracking-[0.3em] uppercase">
+              Selecionando 3 projetos / 2026
+            </span>
+          </div>
         </motion.div>
       </div>
     </section>
