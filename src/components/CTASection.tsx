@@ -1,50 +1,60 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { ArrowRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 
 const CTASection = () => {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section className="py-28 bg-foreground relative overflow-hidden" ref={ref}>
-      {/* Subtle grid */}
-      <div
-        className="absolute inset-0 opacity-[0.03]"
-        style={{
-          backgroundImage: `linear-gradient(hsla(0,0%,100%,0.3) 1px, transparent 1px), linear-gradient(90deg, hsla(0,0%,100%,0.3) 1px, transparent 1px)`,
-          backgroundSize: "80px 80px",
-        }}
-      />
-
+    <section ref={ref} className="py-32 md:py-48 bg-ink text-background relative overflow-hidden grain">
       <div className="container mx-auto px-6 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="max-w-3xl"
-        >
-          <div className="flex items-center gap-3 mb-8">
-            <div className="w-8 h-px bg-primary" />
-            <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-primary">始めましょう</span>
+        <div className="grid grid-cols-12 gap-6">
+          <div className="col-span-12 md:col-span-2">
+            <span className="font-mono text-[10px] tracking-[0.35em] uppercase text-background/60">
+              008 / Contato
+            </span>
           </div>
 
-          <h2 className="text-3xl md:text-5xl font-display font-bold mb-6 text-background tracking-tight leading-tight">
-            Transforme sua ideia em um produto digital profissional
-          </h2>
-          <p className="text-background/50 text-base mb-10 leading-relaxed font-light max-w-lg">
-            Sua empresa merece uma presença digital de alto padrão. Vamos desenvolver seu projeto com tecnologia, design e performance.
-          </p>
-          <a
-            href="https://wa.me/5565993381666?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20queria%20um%20or%C3%A7amento!"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group inline-flex items-center gap-3 px-8 py-3.5 bg-primary text-primary-foreground font-medium text-sm tracking-wide hover:bg-gold-light transition-colors duration-300"
-          >
-            Solicitar Orçamento
-            <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-          </a>
-        </motion.div>
+          <div className="col-span-12 md:col-span-10">
+            <motion.h2
+              initial={{ opacity: 0, y: 30 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+              className="font-serif-display font-light text-[clamp(2.5rem,7vw,7rem)] leading-[1] tracking-[-0.03em] text-balance"
+            >
+              Sua marca,<br />
+              elevada ao <span className="italic-serif text-terracotta-soft">patamar</span><br />
+              que ela merece.
+            </motion.h2>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 1, delay: 0.4 }}
+              className="mt-16 flex flex-col md:flex-row items-start md:items-end justify-between gap-10"
+            >
+              <p className="text-background/70 text-base md:text-lg leading-relaxed font-light max-w-md">
+                Aceitamos um número limitado de projetos por trimestre. Se você busca presença digital de alto padrão, conversemos.
+              </p>
+
+              <a
+                href="https://wa.me/5565993381666?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20queria%20um%20or%C3%A7amento!"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center gap-4 border border-background/40 hover:border-terracotta-soft hover:bg-terracotta-soft/10 px-10 py-6 transition-all duration-500"
+              >
+                <span className="font-serif-display text-2xl md:text-3xl font-light">
+                  Iniciar conversa
+                </span>
+                <ArrowUpRight
+                  size={28}
+                  className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"
+                />
+              </a>
+            </motion.div>
+          </div>
+        </div>
       </div>
     </section>
   );
