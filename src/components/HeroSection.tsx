@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
-import heroVideo from "../../public/hero-tech-premium.mp4.asset.json";
 
 const HeroSection = () => {
   const scrollTo = (id: string) =>
@@ -11,21 +10,28 @@ const HeroSection = () => {
       id="hero"
       className="relative min-h-screen flex flex-col justify-end overflow-hidden grain"
     >
-      {/* Cinematic fullscreen video */}
       <div className="absolute inset-0 z-0">
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: "url('/hero-tech-poster.jpg')" }}
+        />
         <video
           autoPlay
           muted
           loop
           playsInline
-          className="w-full h-full object-cover"
-          src={heroVideo.url}
-        />
-        <div className="absolute inset-0 bg-ink/55" />
-        <div className="absolute inset-0 bg-gradient-to-b from-ink/30 via-ink/40 to-ink/85" />
+          preload="auto"
+          poster="/hero-tech-poster.jpg"
+          className="relative z-0 w-full h-full object-cover opacity-95"
+          aria-hidden="true"
+        >
+          <source src="/hero-tech-premium.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-ink/34" />
+        <div className="absolute inset-0 bg-gradient-to-b from-ink/18 via-ink/28 to-ink/82" />
+        <div className="absolute inset-0 bg-gradient-to-r from-ink/12 via-transparent to-transparent" />
       </div>
 
-      {/* Editorial composition — clean */}
       <div className="container mx-auto px-6 relative z-10 pb-24 md:pb-32">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
