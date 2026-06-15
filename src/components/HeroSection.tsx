@@ -21,67 +21,28 @@ const HeroSection = () => {
           className="w-full h-full object-cover"
           src={heroVideo.url}
         />
-        {/* Editorial dark overlay — heavy bottom gradient */}
         <div className="absolute inset-0 bg-ink/55" />
         <div className="absolute inset-0 bg-gradient-to-b from-ink/30 via-ink/40 to-ink/85" />
       </div>
 
-      {/* Top meta line */}
-      <div className="absolute top-28 left-0 right-0 z-10">
-        <div className="container mx-auto px-6 flex items-center justify-between text-background/70">
-          <span className="font-mono text-[10px] tracking-[0.35em] uppercase">
-            Estúdio Digital — Est. 2024
-          </span>
-          <span className="font-mono text-[10px] tracking-[0.35em] uppercase hidden md:inline">
-            Alto Paraguai / MT — Brasil
-          </span>
-        </div>
-      </div>
-
-      {/* Editorial composition */}
+      {/* Editorial composition — clean */}
       <div className="container mx-auto px-6 relative z-10 pb-24 md:pb-32">
-        <div className="grid grid-cols-12 gap-6 items-end">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.2, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="col-span-12 md:col-span-9"
-          >
-            <div className="flex items-center gap-4 mb-10">
-              <div className="w-12 h-px bg-background/60" />
-              <span className="font-mono text-[10px] tracking-[0.35em] uppercase text-background/70">
-                001 — Introdução
-              </span>
-            </div>
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.2, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <h1 className="font-serif-display text-background font-light leading-[0.95] tracking-[-0.02em] text-[clamp(2.8rem,8.5vw,8.5rem)] max-w-[14ch]">
+            Experiências digitais para{" "}
+            <span className="italic-serif text-terracotta/95">marcas</span> de alto padrão.
+          </h1>
+        </motion.div>
 
-            <h1 className="font-serif-display text-background font-light leading-[0.95] tracking-[-0.02em] text-[clamp(2.8rem,8.5vw,8.5rem)]">
-              Experiências
-              <br />
-              digitais para{" "}
-              <span className="italic-serif text-terracotta/95">marcas</span>
-              <br />
-              de alto padrão.
-            </h1>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className="col-span-12 md:col-span-3 md:pb-3"
-          >
-            <p className="text-background/75 text-sm leading-relaxed font-light max-w-xs">
-              Desenhamos a presença digital de marcas que entendem o valor de cada detalhe — do conceito ao último pixel.
-            </p>
-          </motion.div>
-        </div>
-
-        {/* Bottom bar */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 1.3 }}
-          className="mt-20 pt-8 border-t border-background/15 flex flex-col md:flex-row items-start md:items-center justify-between gap-6"
+          transition={{ duration: 1, delay: 1.1 }}
+          className="mt-16 pt-8 border-t border-background/15 flex flex-col md:flex-row items-start md:items-center justify-between gap-6"
         >
           <div className="flex items-center gap-8">
             <a
