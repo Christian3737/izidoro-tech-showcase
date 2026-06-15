@@ -60,9 +60,13 @@ const ExperienceSection = () => {
                   muted
                   loop
                   playsInline
+                  preload="metadata"
+                  poster="/hero-tech-poster.jpg"
                   className="w-full h-full object-cover opacity-80"
-                  src="/hero-video-light.mp4"
-                />
+                  aria-hidden="true"
+                >
+                  <source src="/hero-tech-premium.mp4" type="video/mp4" />
+                </video>
                 <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent" />
                 <div className="absolute bottom-8 left-8 right-8 flex items-end justify-between text-background">
                   <div>
