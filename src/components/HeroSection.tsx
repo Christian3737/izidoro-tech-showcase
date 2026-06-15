@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
+import heroVideo from "../../public/hero-tech-premium.mp4.asset.json";
 
 const HeroSection = () => {
   const scrollTo = (id: string) =>
@@ -18,7 +19,7 @@ const HeroSection = () => {
           loop
           playsInline
           className="w-full h-full object-cover"
-          src="/hero-video-light.mp4"
+          src={heroVideo.url}
         />
         {/* Editorial dark overlay — heavy bottom gradient */}
         <div className="absolute inset-0 bg-ink/55" />
@@ -32,7 +33,7 @@ const HeroSection = () => {
             Estúdio Digital — Est. 2024
           </span>
           <span className="font-mono text-[10px] tracking-[0.35em] uppercase hidden md:inline">
-            Cuiabá / Brasil — Worldwide
+            Alto Paraguai / MT — Brasil
           </span>
         </div>
       </div>
@@ -49,7 +50,7 @@ const HeroSection = () => {
             <div className="flex items-center gap-4 mb-10">
               <div className="w-12 h-px bg-background/60" />
               <span className="font-mono text-[10px] tracking-[0.35em] uppercase text-background/70">
-                001 — Manifesto
+                001 — Introdução
               </span>
             </div>
 
