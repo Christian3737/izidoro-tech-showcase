@@ -20,7 +20,7 @@ const Footer = () => (
 
         <div className="col-span-6 md:col-span-2">
           <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-background/40 mb-4">— Estúdio</p>
-          <p className="text-sm text-background/80">Cuiabá / MT</p>
+          <p className="text-sm text-background/80">Alto Paraguai / MT</p>
           <p className="text-sm text-background/80">Brasil</p>
         </div>
 
@@ -38,7 +38,7 @@ const Footer = () => (
           © {new Date().getFullYear()} IZIDORO TECH — Todos os direitos reservados.
         </p>
         <p className="font-mono text-[10px] tracking-wide italic-serif">
-          Desenhado e construído em Cuiabá, com cuidado.
+          Desenhado e construído em Alto Paraguai, com cuidado.
         </p>
       </div>
     </div>

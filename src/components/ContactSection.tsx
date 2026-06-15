@@ -95,7 +95,7 @@ const ContactSection = () => {
               <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-muted-foreground mb-3">
                 Localização
               </p>
-              <p className="font-serif-display text-xl font-light">Cuiabá / MT · Brasil</p>
+              <p className="font-serif-display text-xl font-light">Alto Paraguai / MT · Brasil</p>
               <p className="text-sm text-muted-foreground font-light mt-1">
                 Atendimento remoto para todo o Brasil e exterior.
               </p>

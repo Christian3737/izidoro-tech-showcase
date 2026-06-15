@@ -1,9 +1,11 @@
 import CustomCursor from "@/components/CustomCursor";
+import Preloader from "@/components/Preloader";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import Marquee from "@/components/Marquee";
-import ManifestoSection from "@/components/ManifestoSection";
+import ElevateSection from "@/components/ElevateSection";
 import ExperienceSection from "@/components/ExperienceSection";
+import GallerySection from "@/components/GallerySection";
 import ProcessSection from "@/components/ProcessSection";
 import ServicesSection from "@/components/ServicesSection";
 import PortfolioSection from "@/components/PortfolioSection";
@@ -16,12 +18,14 @@ import Footer from "@/components/Footer";
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
+      <Preloader />
       <CustomCursor />
       <Header />
       <HeroSection />
       <Marquee />
-      <ManifestoSection />
+      <ElevateSection />
       <ExperienceSection />
+      <GallerySection />
       <ProcessSection />
       <ServicesSection />
       <PortfolioSection />
