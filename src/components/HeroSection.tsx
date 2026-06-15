@@ -22,13 +22,14 @@ const HeroSection = () => {
           playsInline
           preload="auto"
           poster="/hero-tech-poster.jpg"
-          className="w-full h-full object-cover"
+          className="relative z-0 w-full h-full object-cover opacity-95"
           aria-hidden="true"
         >
           <source src="/hero-tech-premium.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-ink/55" />
-        <div className="absolute inset-0 bg-gradient-to-b from-ink/30 via-ink/40 to-ink/85" />
+        <div className="absolute inset-0 bg-ink/34" />
+        <div className="absolute inset-0 bg-gradient-to-b from-ink/18 via-ink/28 to-ink/82" />
+        <div className="absolute inset-0 bg-gradient-to-r from-ink/12 via-transparent to-transparent" />
       </div>
 
       <div className="container mx-auto px-6 relative z-10 pb-24 md:pb-32">
