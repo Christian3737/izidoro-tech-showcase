@@ -65,7 +65,7 @@
 
   html {
     scroll-behavior: smooth;
-    scroll-snap-type: y proximity;
+
   }
 
   section {
@@ -88,15 +88,15 @@
   .text-balance { text-wrap: balance; }
 
   .font-serif-display {
-    font-family: 'Instrument Sans', sans-serif;
-    letter-spacing: -0.035em;
+    font-family: 'Sora', sans-serif;
+    letter-spacing: -0.045em;
   }
 
   .italic-serif {
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: 'Sora', sans-serif;
     font-style: normal;
-    font-weight: 300;
-    letter-spacing: -0.04em;
+    font-weight: 200;
+    letter-spacing: -0.05em;
   }
 
   .text-terracotta { color: hsl(var(--terracotta)); }

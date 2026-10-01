@@ -12,10 +12,10 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ["Instrument Sans", "sans-serif"],
+        display: ["Sora", "sans-serif"],
         body: ["Manrope", "system-ui", "sans-serif"],
         mono: ["IBM Plex Mono", "monospace"],
-        serif: ["Instrument Sans", "sans-serif"],
+        serif: ["Sora", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",
