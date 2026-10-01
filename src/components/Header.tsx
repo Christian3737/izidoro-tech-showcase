@@ -26,7 +26,7 @@ const Header = () => {
     document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const textColor = scrolled ? "text-foreground" : "text-background";
+  const textColor = "text-foreground";
 
   return (
     <motion.header
@@ -65,7 +65,7 @@ const Header = () => {
           className={`hidden md:inline-flex items-center gap-2 text-[11px] tracking-[0.2em] uppercase border-b pb-1 transition-colors ${
             scrolled
               ? "text-foreground border-foreground/40 hover:border-terracotta hover:text-terracotta"
-              : "text-background border-background/40 hover:border-terracotta-soft hover:text-terracotta-soft"
+              : "text-foreground border-foreground/40 hover:border-terracotta hover:text-terracotta"
           }`}
         >
           Iniciar projeto →
