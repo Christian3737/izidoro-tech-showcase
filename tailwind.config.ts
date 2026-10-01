@@ -12,10 +12,10 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ["Fraunces", "serif"],
-        body: ["Inter Tight", "system-ui", "sans-serif"],
-        mono: ["JetBrains Mono", "monospace"],
-        serif: ["Fraunces", "serif"],
+        display: ["Instrument Sans", "sans-serif"],
+        body: ["Manrope", "system-ui", "sans-serif"],
+        mono: ["IBM Plex Mono", "monospace"],
+        serif: ["Instrument Sans", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",
