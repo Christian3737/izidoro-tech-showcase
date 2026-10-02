@@ -17,10 +17,10 @@ const Index = () => {
       <CustomCursor />
       <Header />
       <HeroSection />
-      <GallerySection />
-      <ServicesSection />
-      <PortfolioSection />
       <AboutSection />
+      <PortfolioSection />
+      <ServicesSection />
+      <GallerySection />
       <CTASection />
       <ContactSection />
       <Footer />

@@ -1,145 +1,113 @@
-import { motion, useInView } from "framer-motion";
+import { motion, useScroll, useTransform, useMotionValueEvent, MotionValue } from "framer-motion";
 import { useRef, useState } from "react";
-import { ArrowUpRight, Globe } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 
-type Project = {
-  name: string;
-  domain: string;
-  category: string;
-  year: string;
-};
+type Project = { name: string; domain: string; category: string };
 
 const projects: Project[] = [
-  { name: "Advocacia Mirtes Belle", domain: "advocaciamirtesbelle.com", category: "Site Institucional — Advocacia", year: "2025" },
-  { name: "Arqui Ernani Guimarães", domain: "arquiernaniguimaraes.com", category: "Portfólio — Arquitetura", year: "2025" },
-  { name: "Convidro", domain: "convidro.com", category: "E-commerce — Vidraçaria", year: "2025" },
-  { name: "Izidoro.Tech", domain: "izidoro.tech", category: "Estúdio Digital", year: "2025" },
-  { name: "Bitencourt Esquadrias", domain: "bitencourtesquadrias.com", category: "Site Institucional — Indústria", year: "2025" },
-  { name: "Águia Soluções", domain: "aguia-solucoes.com", category: "Serviços — Institucional", year: "2025" },
-  { name: "Asas do Parecis", domain: "asasdoparecis.com", category: "Turismo & Experiências", year: "2025" },
+  { name: "Advocacia Mirtes Belle", domain: "advocaciamirtesbelle.com", category: "Advocacia" },
+  { name: "Fabio Chies", domain: "fabiochies.arq.br", category: "Arquitetura" },
+  { name: "Convidro", domain: "convidro.com", category: "Vidraçaria" },
+  { name: "Bitencourt Esquadrias", domain: "bitencourtesquadrias.com", category: "Indústria" },
+  { name: "Águia Soluções", domain: "aguia-solucoes.com", category: "Serviços" },
+  { name: "Asas do Parecis", domain: "asasdoparecis.com", category: "Turismo" },
+  { name: "Izidoro.Tech", domain: "izidoro.tech", category: "Estúdio digital" },
 ];
 
-const shot = (domain: string) =>
-  `https://image.thum.io/get/width/1400/crop/1000/noanimate/https://${domain}`;
+const shot = (d: string) => `https://image.thum.io/get/width/1800/crop/1100/noanimate/https://${d}`;
 
-const ProjectCard = ({ project, index }: { project: Project; index: number }) => {
-  const [loaded, setLoaded] = useState(false);
+// Composition variants: image width / offset / title side
+const layouts = [
+  { img: "md:w-[86%] md:ml-0", title: "md:right-0 md:text-right", from: 80 },
+  { img: "md:w-[72%] md:ml-auto", title: "md:left-0", from: -80 },
+  { img: "md:w-[64%] md:ml-[8%]", title: "md:right-[4%] md:text-right", from: 80 },
+  { img: "md:w-[94%] md:mx-auto", title: "md:left-[3%]", from: -80 },
+];
+
+const pad = (n: number) => String(n).padStart(2, "0");
+
+const Panel = ({ p, i, progress }: { p: Project; i: number; progress: MotionValue<number> }) => {
+  const n = projects.length;
+  const start = i / n;
+  const end = (i + 1) / n;
+  const L = layouts[i % layouts.length];
+  const scale = useTransform(progress, [start - 0.08, start, end], [1.12, 1, 0.94]);
+  const opacity = useTransform(progress, [start - 0.06, start, end - 0.04, end + 0.02], [0, 1, 1, i === n - 1 ? 1 : 0]);
+  const blur = useTransform(progress, [end - 0.04, end + 0.02], ["blur(0px)", i === n - 1 ? "blur(0px)" : "blur(6px)"]);
+  const imgY = useTransform(progress, [start, end], ["0%", "-6%"]);
+  const titleX = useTransform(progress, [start - 0.06, start + 0.02], [L.from, 0]);
+  const clip = useTransform(progress, [start - 0.08, start], ["inset(12% 8% 12% 8%)", "inset(0% 0% 0% 0%)"]);
+
   return (
-    <motion.a
-      href={`https://${project.domain}`}
-      target="_blank"
-      rel="noopener noreferrer"
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.9, delay: (index % 3) * 0.08, ease: [0.16, 1, 0.3, 1] }}
-      className="group block"
-    >
-      <div className="aspect-[4/3] overflow-hidden bg-card relative border border-border/60">
-        {!loaded && (
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-6 h-6 border border-terracotta/40 border-t-terracotta rounded-full animate-spin" />
-          </div>
-        )}
-        <img
-          src={shot(project.domain)}
-          alt={`Preview do site ${project.name}`}
-          loading="lazy"
-          onLoad={() => setLoaded(true)}
-          className={`w-full h-full object-cover object-top grayscale-[35%] group-hover:grayscale-0 scale-100 group-hover:scale-[1.03] transition-all duration-[1200ms] ease-out ${
-            loaded ? "opacity-100" : "opacity-0"
-          }`}
-        />
-        <div className="absolute inset-0 bg-ink/5 group-hover:bg-ink/0 transition-colors duration-700" />
-
-        <div className="absolute top-4 left-4 flex items-center gap-2 px-3 py-1.5 bg-background/85 backdrop-blur-md border border-border/60">
-          <Globe size={11} className="text-terracotta" />
-          <span className="font-mono text-[10px] tracking-[0.15em] text-foreground/80">
-            {project.domain}
+    <motion.div style={{ opacity, filter: blur }} className="absolute inset-0 flex items-center pointer-events-none" aria-hidden={false}>
+      <div className="container mx-auto px-6 relative w-full">
+        <motion.a
+          href={`https://${p.domain}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ scale, clipPath: clip }}
+          className={`group block relative w-full aspect-[16/10] md:aspect-[16/9] max-h-[72vh] overflow-hidden bg-card pointer-events-auto ${L.img}`}
+        >
+          <motion.img
+            src={shot(p.domain)}
+            alt={`Site ${p.name}`}
+            loading="lazy"
+            style={{ y: imgY }}
+            className="absolute inset-0 w-full h-[112%] object-cover object-top saturate-[0.75] contrast-[1.05] brightness-[1.03] group-hover:saturate-100 transition-[filter] duration-1000"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-ink/35 via-transparent to-background/10" />
+          <span className="absolute bottom-5 right-5 inline-flex items-center gap-2 font-mono text-[10px] tracking-[0.3em] uppercase text-background opacity-80 group-hover:opacity-100">
+            Ver projeto <ArrowUpRight size={14} className="group-hover:rotate-45 transition-transform duration-500" />
           </span>
-        </div>
+        </motion.a>
 
-        <div className="absolute bottom-4 right-4 w-10 h-10 bg-foreground text-background flex items-center justify-center opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-500">
-          <ArrowUpRight size={16} />
-        </div>
-      </div>
-
-      <div className="mt-5 flex items-start justify-between gap-4">
-        <div>
-          <span className="font-mono text-[10px] tracking-[0.3em] text-terracotta uppercase">
-            {project.category} — {project.year}
+        <motion.div
+          style={{ x: titleX }}
+          className={`relative md:absolute md:-bottom-14 mt-6 md:mt-0 ${L.title} md:max-w-[46%] md:frost md:px-8 md:py-6 pointer-events-auto`}
+        >
+          <span className="font-mono text-[10px] tracking-[0.35em] uppercase text-terracotta">
+            {pad(i + 1)} — {p.category}
           </span>
-          <h3 className="font-serif-display text-2xl md:text-[26px] font-light mt-2 leading-tight group-hover:italic transition-all duration-500">
-            {project.name}
-          </h3>
-        </div>
+          <h3 className="font-serif-display font-light text-3xl md:text-5xl leading-[1] mt-3">{p.name}</h3>
+          <p className="font-mono text-[10px] tracking-[0.2em] text-muted-foreground mt-3">{p.domain}</p>
+        </motion.div>
       </div>
-    </motion.a>
+    </motion.div>
   );
 };
 
 const PortfolioSection = () => {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
+  const [active, setActive] = useState(0);
+  useMotionValueEvent(scrollYProgress, "change", (v) =>
+    setActive(Math.min(projects.length - 1, Math.max(0, Math.floor(v * projects.length))))
+  );
 
   return (
-    <section id="trabalhos" ref={ref} className="py-32 md:py-48 relative">
-      <div className="container mx-auto px-6">
-        <div className="grid grid-cols-12 gap-6 mb-20">
-          <div className="col-span-12 md:col-span-7">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-8 h-px bg-terracotta" />
-              <span className="font-mono text-[10px] tracking-[0.35em] uppercase text-terracotta">
-                006 / Trabalhos selecionados
-              </span>
-            </div>
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 1 }}
-              className="font-serif-display font-light text-4xl md:text-6xl leading-[1.05] tracking-[-0.02em]"
-            >
-              Soluções <span className="italic-serif text-terracotta">no ar</span>.
-            </motion.h2>
-          </div>
-          <div className="col-span-12 md:col-span-4 md:col-start-9 md:pt-6">
-            <p className="text-muted-foreground text-base leading-[1.8] font-light">
-              Projetos entregues e ativos. Clique em qualquer cartão para visitar o site ao vivo.
-            </p>
-            <div className="mt-6 flex items-center gap-3 font-mono text-[10px] tracking-[0.3em] uppercase text-foreground/60">
-              <span>{projects.length} projetos</span>
-              <span className="w-4 h-px bg-foreground/30" />
-              <span>Todos ativos</span>
-            </div>
-          </div>
-        </div>
+    <section id="trabalhos" className="relative bg-background">
+      <div className="container mx-auto px-6 pt-28 md:pt-40 pb-10">
+        <span className="font-mono text-[10px] tracking-[0.35em] uppercase text-terracotta">/ 02 — Projetos</span>
+        <h2 className="font-serif-display font-light text-4xl md:text-6xl leading-[1] mt-5">
+          Soluções <span className="italic-serif text-terracotta">no ar</span>.
+        </h2>
+      </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-14">
+      <div ref={ref} style={{ height: `${projects.length * 110}vh` }} className="relative">
+        <div className="sticky top-0 h-screen overflow-hidden">
           {projects.map((p, i) => (
-            <ProjectCard key={p.domain} project={p} index={i} />
+            <Panel key={p.domain} p={p} i={i} progress={scrollYProgress} />
           ))}
-        </div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1, delay: 0.3 }}
-          className="mt-24 pt-10 border-t border-border/60 flex flex-col md:flex-row items-start md:items-center justify-between gap-6"
-        >
-          <p className="font-serif-display italic text-2xl md:text-3xl font-light max-w-xl">
-            Seu projeto pode ser o próximo <span className="text-terracotta">no ar</span>.
-          </p>
-          <a
-            href="https://wa.me/5565993381666?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20queria%20um%20or%C3%A7amento!"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group inline-flex items-center gap-3 text-[11px] tracking-[0.25em] uppercase text-foreground border-b border-foreground/40 pb-2 hover:border-terracotta hover:text-terracotta transition-colors"
-          >
-            Iniciar meu projeto
-            <ArrowUpRight size={14} className="group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform" />
-          </a>
-        </motion.div>
+          {/* Progress indicator */}
+          <div className="absolute right-6 md:right-10 top-1/2 -translate-y-1/2 flex flex-col items-center gap-4 z-20">
+            <span className="font-mono text-[10px] tracking-[0.2em] text-foreground tabular-nums">{pad(active + 1)}</span>
+            <div className="w-px h-28 bg-foreground/15 relative overflow-hidden">
+              <motion.div style={{ scaleY: scrollYProgress }} className="absolute inset-0 bg-terracotta origin-top" />
+            </div>
+            <span className="font-mono text-[10px] tracking-[0.2em] text-muted-foreground tabular-nums">{pad(projects.length)}</span>
+          </div>
+        </div>
       </div>
     </section>
   );

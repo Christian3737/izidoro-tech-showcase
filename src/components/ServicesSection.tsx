@@ -18,7 +18,7 @@ const ServicesSection = () => (
           O que <span className="italic-serif text-terracotta">criamos</span>.
         </h2>
         <span className="font-mono text-[10px] tracking-[0.35em] uppercase text-muted-foreground hidden md:block">
-          03 disciplinas
+          / 03 — Serviços
         </span>
       </div>
 
