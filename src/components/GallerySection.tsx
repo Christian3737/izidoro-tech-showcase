@@ -24,17 +24,12 @@ const GallerySection = () => {
             <div className="flex items-center gap-3 mb-6">
               <div className="w-8 h-px bg-terracotta" />
               <span className="font-mono text-[10px] tracking-[0.35em] uppercase text-terracotta">
-                004 / Galeria
+                / 04 — Tecnologia
               </span>
             </div>
             <h2 className="font-serif-display font-light text-4xl md:text-6xl leading-[1.05] tracking-[-0.02em]">
               Tecnologia <span className="italic-serif text-terracotta">com presença</span>.
             </h2>
-          </div>
-          <div className="col-span-12 md:col-span-5 md:col-start-8 md:pt-6">
-            <p className="text-muted-foreground text-base leading-[1.8] font-light">
-              Imagens, materiais e silêncios — a linguagem visual que sustenta marcas de alto padrão no digital.
-            </p>
           </div>
         </div>
 

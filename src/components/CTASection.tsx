@@ -1,60 +1,67 @@
-import { motion, useInView } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { ArrowUpRight } from "lucide-react";
+import bg from "@/assets/cta-structure.jpg";
+
+const line = (d: number) => ({
+  initial: { y: "105%" },
+  whileInView: { y: 0 },
+  viewport: { once: true, margin: "-100px" },
+  transition: { duration: 1.2, delay: d, ease: [0.77, 0, 0.175, 1] as const },
+});
 
 const CTASection = () => {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
+  const ref = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const scale = useTransform(scrollYProgress, [0, 1], [1.18, 1]);
+  const y = useTransform(scrollYProgress, [0, 1], ["-6%", "6%"]);
 
   return (
-    <section ref={ref} className="py-32 md:py-48 bg-ink text-background relative overflow-hidden grain">
-      <div className="container mx-auto px-6 relative z-10">
-        <div className="grid grid-cols-12 gap-6">
-          <div className="col-span-12 md:col-span-2">
-            <span className="font-mono text-[10px] tracking-[0.35em] uppercase text-background/60">
-              008 / Contato
-            </span>
-          </div>
+    <section ref={ref} className="relative min-h-screen flex items-center overflow-hidden bg-ink">
+      <motion.img
+        src={bg}
+        alt=""
+        aria-hidden
+        loading="lazy"
+        width={1920}
+        height={1088}
+        style={{ scale, y }}
+        className="absolute inset-0 w-full h-full object-cover"
+      />
+      <div className="absolute inset-0 bg-ink/55" />
+      <div className="absolute inset-0 bg-gradient-to-r from-ink/70 via-ink/30 to-transparent" />
 
-          <div className="col-span-12 md:col-span-10">
-            <motion.h2
-              initial={{ opacity: 0, y: 30 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-              className="font-serif-display font-light text-[clamp(2.5rem,7vw,7rem)] leading-[1] tracking-[-0.03em] text-balance"
-            >
-              Sua marca,<br />
-              elevada ao <span className="italic-serif text-terracotta-soft">patamar</span><br />
-              que ela merece.
-            </motion.h2>
+      <div className="container mx-auto px-6 relative z-10 py-32">
+        <span className="font-mono text-[10px] tracking-[0.35em] uppercase text-terracotta-soft">/ 05 — Patamar</span>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 1, delay: 0.4 }}
-              className="mt-16 flex flex-col md:flex-row items-start md:items-end justify-between gap-10"
-            >
-              <p className="text-background/70 text-base md:text-lg leading-relaxed font-light max-w-md">
-                Aceitamos um número limitado de projetos por trimestre. Se você busca presença digital de alto padrão, conversemos.
-              </p>
+        <h2 className="mt-10 font-serif-display font-light text-[clamp(2.8rem,8vw,8rem)] leading-[0.98]">
+          <span className="block overflow-hidden"><motion.span {...line(0)} className="block text-background">Sua marca,</motion.span></span>
+          <span className="block overflow-hidden"><motion.span {...line(0.12)} className="block text-background/55">elevada ao patamar</motion.span></span>
+          <span className="block overflow-hidden">
+            <motion.span {...line(0.24)} className="block text-background">
+              que ela merece<span className="text-terracotta-soft">.</span>
+            </motion.span>
+          </span>
+        </h2>
 
-              <a
-                href="https://wa.me/5565993381666?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20queria%20um%20or%C3%A7amento!"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group inline-flex items-center gap-4 border border-background/40 hover:border-terracotta-soft hover:bg-terracotta-soft/10 px-10 py-6 transition-all duration-500"
-              >
-                <span className="font-serif-display text-2xl md:text-3xl font-light">
-                  Iniciar conversa
-                </span>
-                <ArrowUpRight
-                  size={28}
-                  className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"
-                />
-              </a>
-            </motion.div>
-          </div>
-        </div>
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1, delay: 0.8 }}
+          className="mt-16 flex items-center gap-6"
+        >
+          <div className="w-16 h-px bg-terracotta-soft" />
+          <a
+            href="https://wa.me/5565993381666?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20queria%20um%20or%C3%A7amento!"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group inline-flex items-center gap-3 font-mono text-[11px] tracking-[0.3em] uppercase text-background hover:text-terracotta-soft transition-colors"
+          >
+            Iniciar conversa
+            <ArrowUpRight size={16} className="group-hover:rotate-45 transition-transform duration-500" />
+          </a>
+        </motion.div>
       </div>
     </section>
   );
