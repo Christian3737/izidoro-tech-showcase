@@ -2,19 +2,13 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { ArrowUpRight } from "lucide-react";
 import bg from "@/assets/cta-structure.jpg";
-
-const line = (d: number) => ({
-  initial: { y: "105%" },
-  whileInView: { y: 0 },
-  viewport: { once: true, margin: "-100px" },
-  transition: { duration: 1.2, delay: d, ease: [0.77, 0, 0.175, 1] as const },
-});
+import { useLang, waLink } from "@/i18n";
 
 const CTASection = () => {
+  const { t, lang } = useLang();
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const scale = useTransform(scrollYProgress, [0, 1], [1.18, 1]);
-  const y = useTransform(scrollYProgress, [0, 1], ["-6%", "6%"]);
+  const scale = useTransform(scrollYProgress, [0, 1], [1.15, 1]);
 
   return (
     <section ref={ref} className="relative min-h-screen flex items-center overflow-hidden bg-ink">
@@ -25,24 +19,25 @@ const CTASection = () => {
         loading="lazy"
         width={1920}
         height={1088}
-        style={{ scale, y }}
+        style={{ scale }}
         className="absolute inset-0 w-full h-full object-cover"
       />
-      <div className="absolute inset-0 bg-ink/55" />
-      <div className="absolute inset-0 bg-gradient-to-r from-ink/70 via-ink/30 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-r from-ink/85 via-ink/40 to-transparent" />
 
       <div className="container mx-auto px-6 relative z-10 py-32">
-        <span className="font-mono text-[10px] tracking-[0.35em] uppercase text-terracotta-soft">/ 05 — Patamar</span>
+        <span className="font-mono text-[10px] tracking-[0.35em] uppercase text-terracotta-soft">{t.ctaLabel}</span>
 
-        <h2 className="mt-10 font-serif-display font-light text-[clamp(2.8rem,8vw,8rem)] leading-[0.98]">
-          <span className="block overflow-hidden"><motion.span {...line(0)} className="block text-background">Sua marca,</motion.span></span>
-          <span className="block overflow-hidden"><motion.span {...line(0.12)} className="block text-background/55">elevada ao patamar</motion.span></span>
-          <span className="block overflow-hidden">
-            <motion.span {...line(0.24)} className="block text-background">
-              que ela merece<span className="text-terracotta-soft">.</span>
-            </motion.span>
-          </span>
-        </h2>
+        <motion.blockquote
+          key={lang}
+          initial={{ opacity: 0, y: 40, filter: "blur(8px)" }}
+          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 1.6, ease: [0.16, 1, 0.3, 1] }}
+          className="mt-10 max-w-[16ch] font-elegant italic font-light text-background text-[clamp(2.6rem,6.5vw,6.5rem)] leading-[1.02]"
+        >
+          <span className="text-terracotta-soft">“</span>
+          {t.ctaQuote}
+        </motion.blockquote>
 
         <motion.div
           initial={{ opacity: 0 }}
@@ -53,12 +48,12 @@ const CTASection = () => {
         >
           <div className="w-16 h-px bg-terracotta-soft" />
           <a
-            href="https://wa.me/5565993381666?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20queria%20um%20or%C3%A7amento!"
+            href={waLink(t)}
             target="_blank"
             rel="noopener noreferrer"
-            className="group inline-flex items-center gap-3 font-mono text-[11px] tracking-[0.3em] uppercase text-background hover:text-terracotta-soft transition-colors"
+            className="group inline-flex items-center gap-3 rounded-full border border-background/30 px-7 py-3.5 backdrop-blur-md font-mono text-[11px] tracking-[0.3em] uppercase text-background hover:bg-background hover:text-ink transition-colors duration-500"
           >
-            Iniciar conversa
+            {t.ctaBtn}
             <ArrowUpRight size={16} className="group-hover:rotate-45 transition-transform duration-500" />
           </a>
         </motion.div>
