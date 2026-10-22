@@ -3,22 +3,22 @@ import { ArrowUpRight } from "lucide-react";
 import sites from "@/assets/svc-sites.jpg";
 import sistemas from "@/assets/svc-sistemas.jpg";
 import apps from "@/assets/svc-apps.jpg";
+import { useLang } from "@/i18n";
 
-const services = [
-  { n: "01", t: "Sites", d: "Presença digital que transmite autoridade.", img: sites },
-  { n: "02", t: "Sistemas", d: "Plataformas sob medida para sua operação.", img: sistemas },
-  { n: "03", t: "Aplicativos", d: "Apps iOS e Android refinados em cada gesto.", img: apps },
-];
+const imgs = [sites, sistemas, apps];
 
-const ServicesSection = () => (
+const ServicesSection = () => {
+  const { t } = useLang();
+  const services = t.svcs.map(([title, d], i) => ({ n: `0${i + 1}`, t: title, d, img: imgs[i] }));
+  return (
   <section id="servicos" className="py-28 md:py-40 bg-background">
     <div className="container mx-auto px-6">
       <div className="flex items-end justify-between mb-16 gap-6">
         <h2 className="font-serif-display font-light text-4xl md:text-6xl leading-[1]">
-          O que <span className="italic-serif text-terracotta">criamos</span>.
+          {t.svcA}<span className="italic-serif text-terracotta">{t.svcB}</span>.
         </h2>
         <span className="font-mono text-[10px] tracking-[0.35em] uppercase text-muted-foreground hidden md:block">
-          / 03 — Serviços
+          {t.svcLabel}
         </span>
       </div>
 
@@ -58,6 +58,7 @@ const ServicesSection = () => (
       </div>
     </div>
   </section>
-);
+  );
+};
 
 export default ServicesSection;

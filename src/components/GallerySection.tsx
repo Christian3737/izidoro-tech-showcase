@@ -3,8 +3,10 @@ import { useRef } from "react";
 import tech2 from "@/assets/tech-premium-2.jpg";
 import tech3 from "@/assets/tech-premium-3.jpg";
 import tech1 from "@/assets/tech-premium-1.jpg";
+import { useLang } from "@/i18n";
 
 const GallerySection = () => {
+  const { t } = useLang();
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
 
@@ -24,11 +26,11 @@ const GallerySection = () => {
             <div className="flex items-center gap-3 mb-6">
               <div className="w-8 h-px bg-terracotta" />
               <span className="font-mono text-[10px] tracking-[0.35em] uppercase text-terracotta">
-                / 04 — Tecnologia
+                {t.galLabel}
               </span>
             </div>
             <h2 className="font-serif-display font-light text-4xl md:text-6xl leading-[1.05] tracking-[-0.02em]">
-              Tecnologia <span className="italic-serif text-terracotta">com presença</span>.
+              {t.galA}<span className="italic-serif text-terracotta">{t.galB}</span>.
             </h2>
           </div>
         </div>

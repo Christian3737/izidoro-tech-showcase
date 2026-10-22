@@ -1,112 +1,112 @@
-import { motion, useScroll, useTransform, useMotionValueEvent, MotionValue } from "framer-motion";
-import { useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
 import { ArrowUpRight } from "lucide-react";
+import { useLang } from "@/i18n";
 
-type Project = { name: string; domain: string; category: string };
-
-const projects: Project[] = [
-  { name: "Advocacia Mirtes Belle", domain: "advocaciamirtesbelle.com", category: "Advocacia" },
-  { name: "Fabio Chies", domain: "fabiochies.arq.br", category: "Arquitetura" },
-  { name: "Convidro", domain: "convidro.com", category: "Vidraçaria" },
-  { name: "Bitencourt Esquadrias", domain: "bitencourtesquadrias.com", category: "Indústria" },
-  { name: "Águia Soluções", domain: "aguia-solucoes.com", category: "Serviços" },
-  { name: "Asas do Parecis", domain: "asasdoparecis.com", category: "Turismo" },
-  { name: "Izidoro.Tech", domain: "izidoro.tech", category: "Estúdio digital" },
+const projects = [
+  { name: "Advocacia Mirtes Belle", domain: "advocaciamirtesbelle.com" },
+  { name: "Fabio Chies", domain: "fabiochies.arq.br" },
+  { name: "Convidro", domain: "convidro.com" },
+  { name: "Bitencourt Esquadrias", domain: "bitencourtesquadrias.com" },
+  { name: "Águia Soluções", domain: "aguia-solucoes.com" },
+  { name: "Asas do Parecis", domain: "asasdoparecis.com" },
+  { name: "Izidoro.Tech", domain: "izidoro.tech" },
 ];
 
-const shot = (d: string) => `https://image.thum.io/get/width/1800/crop/1100/noanimate/https://${d}`;
-
-// Composition variants: image width / offset / title side
-const layouts = [
-  { img: "md:w-[86%] md:ml-0", title: "md:right-0 md:text-right", from: 80 },
-  { img: "md:w-[72%] md:ml-auto", title: "md:left-0", from: -80 },
-  { img: "md:w-[64%] md:ml-[8%]", title: "md:right-[4%] md:text-right", from: 80 },
-  { img: "md:w-[94%] md:mx-auto", title: "md:left-[3%]", from: -80 },
-];
-
+const shot = (d: string) => `https://image.thum.io/get/width/1600/crop/1000/noanimate/https://${d}`;
 const pad = (n: number) => String(n).padStart(2, "0");
 
-const Panel = ({ p, i, progress }: { p: Project; i: number; progress: MotionValue<number> }) => {
-  const n = projects.length;
-  const start = i / n;
-  const end = (i + 1) / n;
-  const L = layouts[i % layouts.length];
-  const scale = useTransform(progress, [start - 0.08, start, end], [1.12, 1, 0.94]);
-  const opacity = useTransform(progress, [start - 0.06, start, end - 0.04, end + 0.02], [0, 1, 1, i === n - 1 ? 1 : 0]);
-  const blur = useTransform(progress, [end - 0.04, end + 0.02], ["blur(0px)", i === n - 1 ? "blur(0px)" : "blur(6px)"]);
-  const imgY = useTransform(progress, [start, end], ["0%", "-6%"]);
-  const titleX = useTransform(progress, [start - 0.06, start + 0.02], [L.from, 0]);
-  const clip = useTransform(progress, [start - 0.08, start], ["inset(12% 8% 12% 8%)", "inset(0% 0% 0% 0%)"]);
-
-  return (
-    <motion.div style={{ opacity, filter: blur }} className="absolute inset-0 flex items-center pointer-events-none" aria-hidden={false}>
-      <div className="container mx-auto px-6 relative w-full">
-        <motion.a
-          href={`https://${p.domain}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{ scale, clipPath: clip }}
-          className={`group block relative w-full aspect-[16/10] md:aspect-[16/9] max-h-[72vh] overflow-hidden bg-card pointer-events-auto ${L.img}`}
-        >
-          <motion.img
-            src={shot(p.domain)}
-            alt={`Site ${p.name}`}
-            loading="lazy"
-            style={{ y: imgY }}
-            className="absolute inset-0 w-full h-[112%] object-cover object-top saturate-[0.75] contrast-[1.05] brightness-[1.03] group-hover:saturate-100 transition-[filter] duration-1000"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-ink/35 via-transparent to-background/10" />
-          <span className="absolute bottom-5 right-5 inline-flex items-center gap-2 font-mono text-[10px] tracking-[0.3em] uppercase text-background opacity-80 group-hover:opacity-100">
-            Ver projeto <ArrowUpRight size={14} className="group-hover:rotate-45 transition-transform duration-500" />
-          </span>
-        </motion.a>
-
-        <motion.div
-          style={{ x: titleX }}
-          className={`relative md:absolute md:-bottom-14 mt-6 md:mt-0 ${L.title} md:max-w-[46%] md:frost md:px-8 md:py-6 pointer-events-auto`}
-        >
-          <span className="font-mono text-[10px] tracking-[0.35em] uppercase text-terracotta">
-            {pad(i + 1)} — {p.category}
-          </span>
-          <h3 className="font-serif-display font-light text-3xl md:text-5xl leading-[1] mt-3">{p.name}</h3>
-          <p className="font-mono text-[10px] tracking-[0.2em] text-muted-foreground mt-3">{p.domain}</p>
-        </motion.div>
-      </div>
-    </motion.div>
-  );
-};
-
 const PortfolioSection = () => {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
+  const { t } = useLang();
   const [active, setActive] = useState(0);
-  useMotionValueEvent(scrollYProgress, "change", (v) =>
-    setActive(Math.min(projects.length - 1, Math.max(0, Math.floor(v * projects.length))))
-  );
+  const p = projects[active];
 
   return (
-    <section id="trabalhos" className="relative bg-background">
-      <div className="container mx-auto px-6 pt-28 md:pt-40 pb-10">
-        <span className="font-mono text-[10px] tracking-[0.35em] uppercase text-terracotta">/ 02 — Projetos</span>
-        <h2 className="font-serif-display font-light text-4xl md:text-6xl leading-[1] mt-5">
-          Soluções <span className="italic-serif text-terracotta">no ar</span>.
-        </h2>
-      </div>
-
-      <div ref={ref} style={{ height: `${projects.length * 110}vh` }} className="relative">
-        <div className="sticky top-0 h-screen overflow-hidden">
-          {projects.map((p, i) => (
-            <Panel key={p.domain} p={p} i={i} progress={scrollYProgress} />
-          ))}
-
-          {/* Progress indicator */}
-          <div className="absolute right-6 md:right-10 top-1/2 -translate-y-1/2 flex flex-col items-center gap-4 z-20">
-            <span className="font-mono text-[10px] tracking-[0.2em] text-foreground tabular-nums">{pad(active + 1)}</span>
-            <div className="w-px h-28 bg-foreground/15 relative overflow-hidden">
-              <motion.div style={{ scaleY: scrollYProgress }} className="absolute inset-0 bg-terracotta origin-top" />
-            </div>
-            <span className="font-mono text-[10px] tracking-[0.2em] text-muted-foreground tabular-nums">{pad(projects.length)}</span>
+    <section id="trabalhos" className="relative bg-background py-28 md:py-40">
+      <div className="container mx-auto px-6">
+        <div className="flex flex-wrap items-end justify-between gap-6 mb-14 md:mb-20">
+          <div>
+            <span className="font-mono text-[10px] tracking-[0.35em] uppercase text-terracotta">{t.projLabel}</span>
+            <h2 className="font-serif-display font-light text-4xl md:text-6xl leading-[1] mt-5">
+              {t.projA}<span className="italic-serif text-terracotta">{t.projB}</span>.
+            </h2>
           </div>
+          <p className="hidden md:block font-mono text-[10px] tracking-[0.25em] uppercase text-muted-foreground">{t.projHint}</p>
+        </div>
+
+        {/* Desktop: index list + live preview */}
+        <div className="hidden md:grid grid-cols-12 gap-10 items-start">
+          <ul className="col-span-5 border-t border-border">
+            {projects.map((pr, i) => (
+              <li key={pr.domain}>
+                <a
+                  href={`https://${pr.domain}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onMouseEnter={() => setActive(i)}
+                  onFocus={() => setActive(i)}
+                  className="group flex items-center gap-6 py-6 border-b border-border"
+                >
+                  <span className={`font-mono text-[10px] tracking-[0.2em] tabular-nums transition-colors ${active === i ? "text-terracotta" : "text-muted-foreground"}`}>
+                    {pad(i + 1)}
+                  </span>
+                  <div className="flex-1 min-w-0">
+                    <p className={`font-serif-display font-light text-2xl lg:text-3xl leading-tight transition-all duration-500 ${active === i ? "text-foreground translate-x-2" : "text-foreground/45"}`}>
+                      {pr.name}
+                    </p>
+                    <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-muted-foreground mt-1">{t.cats[i]}</p>
+                  </div>
+                  <ArrowUpRight size={18} className={`transition-all duration-500 ${active === i ? "opacity-100 text-terracotta rotate-45" : "opacity-0"}`} />
+                </a>
+              </li>
+            ))}
+          </ul>
+
+          <div className="col-span-7 sticky top-28">
+            <a
+              href={`https://${p.domain}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group block relative aspect-[16/10] overflow-hidden rounded-2xl bg-card shadow-[0_40px_80px_-40px_hsl(var(--ink)/0.35)]"
+            >
+              <AnimatePresence mode="popLayout">
+                <motion.img
+                  key={p.domain}
+                  src={shot(p.domain)}
+                  alt={p.name}
+                  initial={{ opacity: 0, scale: 1.06 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                  className="absolute inset-0 w-full h-full object-cover object-top"
+                />
+              </AnimatePresence>
+              <div className="absolute inset-x-0 bottom-0 p-6 flex items-center justify-between bg-gradient-to-t from-ink/70 to-transparent">
+                <span className="font-mono text-[10px] tracking-[0.25em] text-background">{p.domain}</span>
+                <span className="inline-flex items-center gap-2 rounded-full bg-background/90 px-4 py-2 text-[12px] font-semibold text-ink">
+                  {t.projOpen} <ArrowUpRight size={14} />
+                </span>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        {/* Mobile: clean cards */}
+        <div className="md:hidden grid gap-8">
+          {projects.map((pr, i) => (
+            <a key={pr.domain} href={`https://${pr.domain}`} target="_blank" rel="noopener noreferrer" className="block">
+              <div className="aspect-[16/10] overflow-hidden rounded-xl bg-card">
+                <img src={shot(pr.domain)} alt={pr.name} loading="lazy" className="w-full h-full object-cover object-top" />
+              </div>
+              <div className="flex items-center justify-between mt-4">
+                <div>
+                  <p className="font-mono text-[10px] tracking-[0.25em] uppercase text-terracotta">{pad(i + 1)} — {t.cats[i]}</p>
+                  <p className="font-serif-display font-light text-2xl mt-1">{pr.name}</p>
+                </div>
+                <ArrowUpRight size={18} className="text-terracotta" />
+              </div>
+            </a>
+          ))}
         </div>
       </div>
     </section>
