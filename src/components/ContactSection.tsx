@@ -1,10 +1,12 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { Copy, Check, ArrowUpRight } from "lucide-react";
+import { useLang, waLink } from "@/i18n";
 
 const WA_URL = "https://wa.me/5565993381666?text=";
 
 const ContactSection = () => {
+  const { t } = useLang();
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
   const [copied, setCopied] = useState<string | null>(null);
@@ -18,8 +20,13 @@ const ContactSection = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const msg = `Olá, vim pelo site e queria um orçamento!%0A%0A*Nome:* ${form.nome}%0A*Empresa:* ${form.empresa || "Não informada"}%0A*Serviço:* ${form.servico || "Não informado"}%0A*Mensagem:* ${form.mensagem || "Sem mensagem adicional"}`;
-    window.open(`${WA_URL}${encodeURI(msg)}`, "_blank");
+    const msg = `${t.waMsg}
+
+*${t.wName}:* ${form.nome}
+*${t.wCo}:* ${form.empresa || t.notInf}
+*${t.wSvc}:* ${form.servico || t.notInf}
+*${t.wMsg}:* ${form.mensagem || t.noMsg}`;
+    window.open(`${WA_URL}${encodeURIComponent(msg)}`, "_blank");
   };
 
   return (
@@ -30,16 +37,16 @@ const ContactSection = () => {
             <div className="flex items-center gap-3 mb-6">
               <div className="w-8 h-px bg-terracotta" />
               <span className="font-mono text-[10px] tracking-[0.35em] uppercase text-terracotta">
-                009 / Diálogo
+                {t.ctLabel}
               </span>
             </div>
             <h2 className="font-serif-display font-light text-4xl md:text-6xl leading-[1.05] tracking-[-0.02em]">
-              Vamos <span className="italic-serif text-terracotta">conversar</span>.
+              {t.ctA}<span className="italic-serif text-terracotta">{t.ctB}</span>.
             </h2>
           </div>
           <div className="col-span-12 md:col-span-5 md:col-start-8 md:pt-6">
             <p className="text-muted-foreground text-base leading-[1.8] font-light">
-              Conte-nos brevemente sobre sua marca e seu momento. Respondemos pessoalmente em até um dia útil.
+              {t.ctP}
             </p>
           </div>
         </div>
@@ -54,7 +61,7 @@ const ContactSection = () => {
               className="space-y-0 border-t border-border"
             >
               {[
-                { label: "WhatsApp", value: "+55 (65) 99338-1666", key: "wa", action: "https://wa.me/5565993381666?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20queria%20um%20or%C3%A7amento!", copy: "+5565993381666" },
+                { label: "WhatsApp", value: "+55 (65) 99338-1666", key: "wa", action: waLink(t), copy: "+5565993381666" },
                 { label: "Email", value: "christian.gabriel.izidoro@gmail.com", key: "email", action: "mailto:christian.gabriel.izidoro@gmail.com", copy: "christian.gabriel.izidoro@gmail.com" },
                 { label: "Instagram", value: "@izidoro.tech", key: "ig", action: "https://instagram.com/izidoro.tech", copy: "izidoro.tech" },
               ].map((c) => (
@@ -71,7 +78,7 @@ const ContactSection = () => {
                     <div className="flex items-center gap-2">
                       <button
                         onClick={() => copyText(c.copy, c.key)}
-                        aria-label={`Copiar ${c.label}`}
+                        aria-label={`${t.copy} ${c.label}`}
                         className="w-10 h-10 border border-border flex items-center justify-center hover:border-terracotta hover:text-terracotta transition-colors"
                       >
                         {copied === c.key ? <Check size={14} /> : <Copy size={14} />}
@@ -80,7 +87,7 @@ const ContactSection = () => {
                         href={c.action}
                         target="_blank"
                         rel="noopener noreferrer"
-                        aria-label={`Abrir ${c.label}`}
+                        aria-label={`${t.open} ${c.label}`}
                         className="w-10 h-10 border border-border flex items-center justify-center hover:border-terracotta hover:text-terracotta transition-colors"
                       >
                         <ArrowUpRight size={14} />
@@ -103,8 +110,8 @@ const ContactSection = () => {
               className="space-y-0"
             >
               {[
-                { k: "nome", l: "Nome", req: true, ph: "Como podemos chamar você" },
-                { k: "empresa", l: "Marca / Empresa", req: false, ph: "Nome da sua marca" },
+                { k: "nome", l: t.fName, req: true, ph: t.fNamePh },
+                { k: "empresa", l: t.fCo, req: false, ph: t.fCoPh },
               ].map((f) => (
                 <div key={f.k} className="border-b border-border py-5">
                   <label className="block font-mono text-[10px] tracking-[0.3em] uppercase text-muted-foreground mb-2">
@@ -123,30 +130,26 @@ const ContactSection = () => {
 
               <div className="border-b border-border py-5">
                 <label className="block font-mono text-[10px] tracking-[0.3em] uppercase text-muted-foreground mb-2">
-                  — Natureza do projeto
+                  — {t.fSvc}
                 </label>
                 <select
                   value={form.servico}
                   onChange={(e) => setForm({ ...form, servico: e.target.value })}
                   className="w-full bg-transparent text-foreground font-serif-display text-xl md:text-2xl font-light focus:outline-none appearance-none cursor-pointer"
                 >
-                  <option value="">Selecione uma disciplina</option>
-                  <option value="Website Institucional">Website Institucional</option>
-                  <option value="Landing Page Premium">Landing Page Premium</option>
-                  <option value="Aplicativo Mobile">Aplicativo Mobile</option>
-                  <option value="Sistema / Plataforma">Sistema / Plataforma</option>
-                  <option value="Outro">Outro</option>
+                  <option value="">{t.fSvcPh}</option>
+                  {t.fOpts.map((o) => <option key={o} value={o}>{o}</option>)}
                 </select>
               </div>
 
               <div className="border-b border-border py-5">
                 <label className="block font-mono text-[10px] tracking-[0.3em] uppercase text-muted-foreground mb-2">
-                  — Conte-nos brevemente
+                  — {t.fMsg}
                 </label>
                 <textarea
                   value={form.mensagem}
                   onChange={(e) => setForm({ ...form, mensagem: e.target.value })}
-                  placeholder="Sobre sua marca, momento e visão"
+                  placeholder={t.fMsgPh}
                   rows={3}
                   className="w-full bg-transparent text-foreground font-serif-display text-xl md:text-2xl font-light placeholder:text-muted-foreground/40 focus:outline-none resize-none"
                 />
@@ -156,9 +159,7 @@ const ContactSection = () => {
                 type="submit"
                 className="group w-full mt-10 flex items-center justify-between gap-3 bg-ink text-background px-8 py-6 hover:bg-terracotta transition-colors duration-500"
               >
-                <span className="font-serif-display text-xl md:text-2xl font-light">
-                  Enviar mensagem
-                </span>
+                <span className="font-serif-display text-xl md:text-2xl font-light">{t.fSend}</span>
                 <ArrowUpRight
                   size={22}
                   className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"
