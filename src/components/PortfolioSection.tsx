@@ -1,5 +1,5 @@
-import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
+import { useRef, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { useLang } from "@/i18n";
 
@@ -19,12 +19,18 @@ const pad = (n: number) => String(n).padStart(2, "0");
 const PortfolioSection = () => {
   const { t } = useLang();
   const [active, setActive] = useState(0);
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
+  useMotionValueEvent(scrollYProgress, "change", (v) =>
+    setActive(Math.min(projects.length - 1, Math.max(0, Math.floor(v * projects.length))))
+  );
   const p = projects[active];
 
   return (
-    <section id="trabalhos" className="relative bg-background py-28 md:py-40">
-      <div className="container mx-auto px-6">
-        <div className="flex flex-wrap items-end justify-between gap-6 mb-14 md:mb-20">
+    <section id="trabalhos" className="relative bg-background pt-28 md:pt-40">
+      <div ref={ref} style={{ height: `${projects.length * 75}vh` }} className="relative">
+      <div className="sticky top-0 h-screen flex flex-col justify-center container mx-auto px-6 pt-20">
+        <div className="flex flex-wrap items-end justify-between gap-6 mb-8 md:mb-12">
           <div>
             <span className="font-mono text-[10px] tracking-[0.35em] uppercase text-terracotta">{t.projLabel}</span>
             <h2 className="font-serif-display font-light text-4xl md:text-6xl leading-[1] mt-5">
@@ -35,17 +41,15 @@ const PortfolioSection = () => {
         </div>
 
         {/* Desktop: index list + live preview */}
-        <div className="hidden md:grid grid-cols-12 gap-10 items-start">
-          <ul className="col-span-5 border-t border-border">
+        <div className="grid md:grid-cols-12 gap-6 md:gap-10 items-center">
+          <ul className="hidden md:block col-span-5 border-t border-border">
             {projects.map((pr, i) => (
               <li key={pr.domain}>
                 <a
                   href={`https://${pr.domain}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  onMouseEnter={() => setActive(i)}
-                  onFocus={() => setActive(i)}
-                  className="group flex items-center gap-6 py-6 border-b border-border"
+                                    className="group flex items-center gap-6 py-4 lg:py-5 border-b border-border"
                 >
                   <span className={`font-mono text-[10px] tracking-[0.2em] tabular-nums transition-colors ${active === i ? "text-terracotta" : "text-muted-foreground"}`}>
                     {pad(i + 1)}
@@ -62,7 +66,7 @@ const PortfolioSection = () => {
             ))}
           </ul>
 
-          <div className="col-span-7 sticky top-28">
+          <div className="md:col-span-7">
             <a
               href={`https://${p.domain}`}
               target="_blank"
@@ -82,7 +86,7 @@ const PortfolioSection = () => {
                 />
               </AnimatePresence>
               <div className="absolute inset-x-0 bottom-0 p-6 flex items-center justify-between bg-gradient-to-t from-ink/70 to-transparent">
-                <span className="font-mono text-[10px] tracking-[0.25em] text-background">{p.domain}</span>
+                <span className="font-mono text-[10px] tracking-[0.25em] text-background">{pad(active + 1)} / {pad(projects.length)} · {p.name}</span>
                 <span className="inline-flex items-center gap-2 rounded-full bg-background/90 px-4 py-2 text-[12px] font-semibold text-ink">
                   {t.projOpen} <ArrowUpRight size={14} />
                 </span>
@@ -91,23 +95,7 @@ const PortfolioSection = () => {
           </div>
         </div>
 
-        {/* Mobile: clean cards */}
-        <div className="md:hidden grid gap-8">
-          {projects.map((pr, i) => (
-            <a key={pr.domain} href={`https://${pr.domain}`} target="_blank" rel="noopener noreferrer" className="block">
-              <div className="aspect-[16/10] overflow-hidden rounded-xl bg-card">
-                <img src={shot(pr.domain)} alt={pr.name} loading="lazy" className="w-full h-full object-cover object-top" />
-              </div>
-              <div className="flex items-center justify-between mt-4">
-                <div>
-                  <p className="font-mono text-[10px] tracking-[0.25em] uppercase text-terracotta">{pad(i + 1)} — {t.cats[i]}</p>
-                  <p className="font-serif-display font-light text-2xl mt-1">{pr.name}</p>
-                </div>
-                <ArrowUpRight size={18} className="text-terracotta" />
-              </div>
-            </a>
-          ))}
-        </div>
+      </div>
       </div>
     </section>
   );
